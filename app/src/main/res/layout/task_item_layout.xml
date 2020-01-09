@@ -39,7 +39,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textViewDeadline"
+                        android:id="@+id/textViewDescription"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
@@ -47,7 +47,7 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/textViewYear"
+                        android:id="@+id/textViewDeadline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

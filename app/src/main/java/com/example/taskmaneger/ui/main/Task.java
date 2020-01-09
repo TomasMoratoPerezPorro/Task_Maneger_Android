@@ -1,6 +1,8 @@
 package com.example.taskmaneger.ui.main;
 
-public class Task {
+import java.io.Serializable;
+
+public class Task implements Serializable {
     public String title;
     public String description;
     public int subject;
