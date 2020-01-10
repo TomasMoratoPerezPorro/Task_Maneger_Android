@@ -5,4 +5,10 @@
     <string name="title">Title</string>
     <string name="deadline">Deadline</string>
     <string name="description">Description</string>
+    <string name="titleAlertDialogDeleteTask">Delete Task</string>
+    <string name="messageAlertDialogueDeleteTask">Are you sure ?</string>
+
+    <string name="data_format">dd/mm/yyyy</string>
+    <string name="hour_format">hh:mm</string>
+
 </resources>

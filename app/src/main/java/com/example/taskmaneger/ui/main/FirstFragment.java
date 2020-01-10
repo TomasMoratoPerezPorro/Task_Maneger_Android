@@ -1,5 +1,6 @@
 package com.example.taskmaneger.ui.main;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,11 +14,13 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.taskmaneger.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -25,10 +28,12 @@ import com.example.taskmaneger.R;
 public class FirstFragment extends Fragment {
 
 
+    private FloatingActionButton fab;
     private ListView listViewTasks;
+    private View listViewButton;
     private BDTasks bd;
     private ArrayAdapter<Task> adapter;
-
+    private FloatingActionButton fabAdd;
     private int editingTask = -1;
     private static int REQUEST_CODE_NEW_TASK = 1;
     private static int REQUEST_CODE_EDIT_TASK = 2;
@@ -43,7 +48,7 @@ public class FirstFragment extends Fragment {
 
 
         View root = inflater.inflate(R.layout.fragment_first, container, false);
-
+        fabAdd =root.findViewById(R.id.floatingActionButtonAdd);
 
         return root;
     }
@@ -53,6 +58,7 @@ public class FirstFragment extends Fragment {
         super.onActivityCreated(state);
 
         listViewTasks = getView().findViewById(R.id.listViewTasks);
+
 
         bd= BDTasks.getDummyTasks();
 
@@ -70,6 +76,26 @@ public class FirstFragment extends Fragment {
             }
         });
 
+        listViewTasks.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //deleteSong(position);
+                //abans del delete hem de cridar a un mètode per demanar la confirmació, desde aquest metode esborrarem.
+                deleteConfirmedTask(position);
+                return true;
+            }
+        });
+
+        //fabAdd = listViewButton.findViewById(R.id.floatingActionButtonAdd);
+
+        //fabAdd = getView().findViewById(R.id.floatingActionButtonAdd);
+        //hem de passarli un objecte de una clase que implementi un listener (clase anonima)
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addTask();
+            }
+        });
 
     }
 
@@ -108,7 +134,7 @@ public class FirstFragment extends Fragment {
                     Log.d("songActivityResult","NEW SONG");
                     //creem un metode per afegir una canço, farem sobrecarrega sobre addSong per aprofitar el noim del metode
                     //pero podriem crear un metode nou.
-                    //addTask(task);
+                    addTask(task);
                 }
                 else if(requestCode==REQUEST_CODE_EDIT_TASK){
                     modifyTask(task);
@@ -135,5 +161,56 @@ public class FirstFragment extends Fragment {
             //saveToFile();
         }
 
+    }
+
+    private void deleteConfirmedTask(final int position) {
+        //Farem servir una classe pròpia de Android AlertDialogue.
+        //en comptes de crear un objecte de la classe, (dins te una altre classe que te un builder de dialegs per defecte amb un title, confirmar cancelar...)
+        //Context: dins de quin context es mopstrara el alert
+       // AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_AppCompat_Light_Dialog);
+        builder.setTitle(R.string.titleAlertDialogDeleteTask);
+        builder.setMessage(R.string.messageAlertDialogueDeleteTask);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //per poder utilitzar position, aquesta variable té que ser final
+                deleteTask(position);
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, null);
+        //una vegada esta configurat creem el dialeg
+        builder.create().show();
+    }
+
+    private void deleteTask(int position) {
+        Log.d("deleteSong",bd.getTasks().get(position).toString());
+        bd.getTasks().remove(position);
+        //Despres de esborrar hem de actualitzar la vista
+        //hem de notificar al adapter
+        adapter.notifyDataSetChanged();
+        //per desar les dades
+        //saveToFile();
+    }
+
+    private void addTask() {
+        Log.d("addSong","Afegir una canço");
+        //Per obrir una nova activity (li hem de passar el context (this) i la classe corresponent a al activitat que volem que obri)
+        Intent intent = new Intent(getActivity().getApplicationContext(),EditTaskActivity.class);
+        //ara encenem un nova activitat amb un metode de la classe activity
+        //fem servir el ForResult perque esperm un resultat
+        //per fer ho necessitem un codi per diferenciar el addSong del editSong-> definirem dos atributs de classe que son enters (REQUEST_CODE_NEW_SONG i REQUEST_CODE_EDIT_SONG)
+        startActivityForResult(intent,REQUEST_CODE_NEW_TASK);
+        //saveToFile();
+
+    }
+
+    private void addTask(Task task) {
+        bd.getTasks().add(task);
+        //igual que fem amb delete song ara hem de comunicar que les dades han canviat.
+        adapter.notifyDataSetChanged();
+        //ara volem que es fagi un scroll automatic on s'insereix el item.
+        listViewTasks.smoothScrollToPosition(bd.getTasks().size()-1);
+        //saveToFile();
     }
 }
