@@ -10,14 +10,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.taskmaneger.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -63,7 +58,7 @@ public class FirstFragment extends Fragment {
         bd= BDTasks.getDummyTasks();
 
         //per mostrar les dades fa falta un adapter
-        adapter = new TaskAdapter(getActivity().getApplicationContext(),R.layout.task_item_layout,R.id.textViewTitle,bd.getTasks(),R.id.textViewDescription,R.id.textViewDeadline);
+        adapter = new TaskAdapter(getActivity().getApplicationContext(),R.layout.task_item_layout,R.id.textViewTitle,bd.getTasks(),R.id.textViewDescription,R.id.textViewDate);
 
         //Passar llista de la bbdd, dirli al list quin es el seu adapter
         listViewTasks.setAdapter(adapter);

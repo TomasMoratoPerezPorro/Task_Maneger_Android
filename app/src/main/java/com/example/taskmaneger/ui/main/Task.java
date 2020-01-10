@@ -4,29 +4,24 @@ import android.icu.util.LocaleData;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Task implements Serializable {
     public String title;
     public String description;
     public int subject;
-    public long deadline;
+    //public long deadline;
     public LocalDate date;
 
-    public Task(String title,String description, int subject, long deadline){
+    public Task(String title,String description, int subject, LocalDate date){
         this.title=title;
         this.description=description;
         this.subject=subject;
-        this.deadline=deadline;
-
-    }
-
-    public Task(String title, String description, int subject, long deadline, LocalDate date){
-        this.title=title;
-        this.description=description;
-        this.subject=subject;
-        this.deadline=deadline;
+        //this.deadline=deadline;
         this.date=date;
+
     }
+
 
     public String getTitle(){
         return title;
@@ -40,19 +35,22 @@ public class Task implements Serializable {
         return subject;
     }
 
-    public long getDeadline() {
-        return deadline;
-    }
+   // public long getDeadline() {
+        //return deadline;
+   // }
 
     public LocalDate getDate(){
         return date;
     }
 
-
+    public String toStringDate(){
+        String formattedDate = this.date.format(DateTimeFormatter.ofPattern("EEEE, d MMM"));
+        return formattedDate;
+    }
 
 
 
     public String toString(){
-        return title+", "+description+", "+subject+", "+deadline;
+        return title+", "+description+", "+subject+", "+date;
     }
 }

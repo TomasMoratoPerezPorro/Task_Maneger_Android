@@ -10,14 +10,14 @@ import android.widget.TextView;
 import java.util.List;
 
 public class TaskAdapter extends ArrayAdapter<Task>{
-    private int idResourceTitle,idResourceDescription,idResourceDeadline;
+    private int idResourceTitle,idResourceDescription,idResourceDate;
 
 
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
         TextView textViewTitle = view.findViewById(idResourceTitle);
         TextView textViewDescription = view.findViewById(idResourceDescription);
-        TextView textViewDeadline = view.findViewById(idResourceDeadline);
+        TextView textViewDate = view.findViewById(idResourceDate);
 
         //position corresponent a la vista que estem creant per a cada canço
 
@@ -29,7 +29,7 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         textViewDescription.setText(task.getDescription());
 
         //la classe integer te un metode to string
-        textViewDeadline.setText(Long.toString(task.getDeadline()));
+        textViewDate.setText(task.toStringDate());
 
         return view;
 
@@ -37,11 +37,11 @@ public class TaskAdapter extends ArrayAdapter<Task>{
 
     //El constructor ha de tenir el context
     public TaskAdapter(Context context, int resource, int idResourceTitle,
-                       List<Task> objects, int idResourceDescription, int idResourceDeadline) {
+                       List<Task> objects, int idResourceDescription, int idResourceDate) {
         super(context, resource, idResourceTitle, objects);
         this.idResourceTitle = idResourceTitle;
         this.idResourceDescription = idResourceDescription;
-        this.idResourceDeadline= idResourceDeadline;
+        this.idResourceDate= idResourceDate;
 
 
     }

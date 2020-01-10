@@ -74,8 +74,20 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
         //ara hem de asociar cada atribut amb el objecte de la interfície
         editTextTitle = findViewById(R.id.editTextTitle);
         editTextDescription = findViewById(R.id.editTextDescription);
-        editTextDeadline = findViewById(R.id.editTextDeadline);
+
         editTextDate = findViewById(R.id.et_mostrar_fecha_picker);
+
+
+        //CALENDARI
+        etFecha = (EditText) findViewById(R.id.et_mostrar_fecha_picker);
+        etHora = (EditText) findViewById(R.id.et_mostrar_hora_picker);
+
+        ibObtenerFecha = (ImageButton) findViewById(R.id.ib_obtener_fecha);
+        ibObtenerHora = (ImageButton) findViewById(R.id.ib_obtener_hora);
+
+        ibObtenerFecha.setOnClickListener(this);
+        ibObtenerHora.setOnClickListener(this);
+
 
         buttonSave = findViewById(R.id.buttonAdd);
         //ara afegim el listener
@@ -98,21 +110,14 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
 
                 editTextTitle.setText(task.getTitle());
                 editTextDescription.setText((task.getDescription()));
-                editTextDeadline.setText(Long.toString(task.getDeadline())); ///Tots els elements visuals funcionen amb Strings, tenim que convertir
+                //editTextDeadline.setText(Long.toString(task.getDeadline())); ///Tots els elements visuals funcionen amb Strings, tenim que convertir
+                etFecha.setText(task.getDate().toString());
 
             }
         }
 
 
-        //CALENDARI
-        etFecha = (EditText) findViewById(R.id.et_mostrar_fecha_picker);
-        etHora = (EditText) findViewById(R.id.et_mostrar_hora_picker);
 
-        ibObtenerFecha = (ImageButton) findViewById(R.id.ib_obtener_fecha);
-        ibObtenerHora = (ImageButton) findViewById(R.id.ib_obtener_hora);
-
-        ibObtenerFecha.setOnClickListener(this);
-        ibObtenerHora.setOnClickListener(this);
     }
 
     private void saveTask() {
@@ -125,20 +130,14 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
         String date = editTextDate.getText().toString();
         Log.d("editTextDate",date);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd/MM/yyyy" );
-        LocalDate ld = LocalDate.parse( "23/01/2016" , formatter );
+        LocalDate ld = LocalDate.parse( date , formatter );
 
 
 
 
-        int deadline;
-        try{
-            deadline = (int) Long.parseLong(editTextDeadline.getText().toString());
-        }
-        catch(Exception e){
-            deadline =2019;
-        }
 
-        Task task = new Task(title,description,1,deadline);
+
+        Task task = new Task(title,description,1,ld);
         Intent intent = new Intent();
         //definim un nom per als parametres de sortida, que no tenen perque ser els mateixos que d'entrada. "OUT_SONG_PARAMETER"
         intent.putExtra(OUT_TASK_PARAMETER,task);

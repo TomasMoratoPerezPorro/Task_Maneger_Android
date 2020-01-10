@@ -3,7 +3,7 @@
     <string name="tab_text_1">TASKS</string>
     <string name="tab_text_2">SUBJECTS</string>
     <string name="title">Title</string>
-    <string name="deadline">Deadline</string>
+    <string name="date">Deadline</string>
     <string name="description">Description</string>
     <string name="titleAlertDialogDeleteTask">Delete Task</string>
     <string name="messageAlertDialogueDeleteTask">Are you sure ?</string>
