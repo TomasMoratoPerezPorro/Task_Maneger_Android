@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import com.example.taskmaneger.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -32,6 +34,7 @@ public class FirstFragment extends Fragment {
     private int editingTask = -1;
     private static int REQUEST_CODE_NEW_TASK = 1;
     private static int REQUEST_CODE_EDIT_TASK = 2;
+    private static String FILE_NAME="bdsongs.obj";
 
 
 
@@ -55,7 +58,17 @@ public class FirstFragment extends Fragment {
         listViewTasks = getView().findViewById(R.id.listViewTasks);
 
 
-        bd= BDTasks.getDummyTasks();
+        //bd= BDTasks.getDummyTasks();
+
+        try{
+            bd = BDTasks.getFromFile(getActivity().getApplicationContext().openFileInput(FILE_NAME));
+
+        }
+        catch(Exception e){
+            //si no es pot obrir el fitxer començem amb una base de dades buida.
+            //rn new BDSongs();
+            bd = new BDTasks();
+        }
 
         //per mostrar les dades fa falta un adapter
         adapter = new TaskAdapter(getActivity().getApplicationContext(),R.layout.task_item_layout,R.id.textViewTitle,bd.getTasks(),R.id.textViewDescription,R.id.textViewDate,R.id.textViewHour);
@@ -153,7 +166,7 @@ public class FirstFragment extends Fragment {
             editingTask=-1;
             //ara notifiquem al adapter que les dades han canviat perque refresqui la vista.
             adapter.notifyDataSetChanged();
-            //saveToFile();
+            saveToFile();
         }
 
     }
@@ -185,7 +198,7 @@ public class FirstFragment extends Fragment {
         //hem de notificar al adapter
         adapter.notifyDataSetChanged();
         //per desar les dades
-        //saveToFile();
+        saveToFile();
     }
 
     private void addTask() {
@@ -196,7 +209,7 @@ public class FirstFragment extends Fragment {
         //fem servir el ForResult perque esperm un resultat
         //per fer ho necessitem un codi per diferenciar el addSong del editSong-> definirem dos atributs de classe que son enters (REQUEST_CODE_NEW_SONG i REQUEST_CODE_EDIT_SONG)
         startActivityForResult(intent,REQUEST_CODE_NEW_TASK);
-        //saveToFile();
+        saveToFile();
 
     }
 
@@ -206,6 +219,17 @@ public class FirstFragment extends Fragment {
         adapter.notifyDataSetChanged();
         //ara volem que es fagi un scroll automatic on s'insereix el item.
         listViewTasks.smoothScrollToPosition(bd.getTasks().size()-1);
-        //saveToFile();
+        saveToFile();
+    }
+
+
+    private void saveToFile(){
+        try{
+            bd.writeToFile(getActivity().getApplicationContext().openFileOutput(FILE_NAME,MODE_PRIVATE));
+
+        }
+        catch(Exception e){
+
+        }
     }
 }
