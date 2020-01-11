@@ -9,18 +9,33 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="#00C01818">
+
+
+        android:layout_marginVertical="10sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="10sp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
+            android:layout_margin="10dp"
             android:baselineAligned="false">
 
 
             <LinearLayout
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:background="#B593BF"
+
+                android:orientation="horizontal"></LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="5sp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -51,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/date"
-                        android:textAlignment="center"
+                        android:textAlignment="viewEnd"
                         android:textSize="18sp" />
 
                 </LinearLayout>
@@ -63,7 +78,7 @@
 
                     <TextView
                         android:id="@+id/textView2"
-                        android:layout_width="289dp"
+                        android:layout_width="242dp"
                         android:layout_height="match_parent"
                         android:text="@string/subject"
                         android:textSize="18sp" />
@@ -72,9 +87,9 @@
                         android:id="@+id/textViewHour"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        android:text="@string/hour" />
+                        android:text="@string/hour"
+                        android:textAlignment="viewEnd"
+                        android:textSize="18sp" />
                 </LinearLayout>
 
             </LinearLayout>
