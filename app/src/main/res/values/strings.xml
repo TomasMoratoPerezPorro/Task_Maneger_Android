@@ -10,5 +10,7 @@
 
     <string name="data_format">dd/mm/yyyy</string>
     <string name="hour_format">hh:mm</string>
+    <string name="subject">Subject</string>
+    <string name="hour">Hour</string>
 
 </resources>

@@ -19,6 +19,7 @@ import com.example.taskmaneger.R;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,7 +27,7 @@ import java.util.Locale;
 
 public class EditTaskActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText editTextTitle, editTextDescription,editTextDeadline,editTextDate;
+    private EditText editTextTitle, editTextDescription,editTextDeadline,editTextDate,editTextTime;
     private Button buttonSave;
 
     //definirem atributs de classe estatics i publics per definir quins parametres pot rebre la classe (desde el intent de main activity)
@@ -76,6 +77,7 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
         editTextDescription = findViewById(R.id.editTextDescription);
 
         editTextDate = findViewById(R.id.et_mostrar_fecha_picker);
+        editTextTime = findViewById(R.id.et_mostrar_hora_picker);
 
 
         //CALENDARI
@@ -111,7 +113,8 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
                 editTextTitle.setText(task.getTitle());
                 editTextDescription.setText((task.getDescription()));
                 //editTextDeadline.setText(Long.toString(task.getDeadline())); ///Tots els elements visuals funcionen amb Strings, tenim que convertir
-                etFecha.setText(task.getDate().toString());
+                etFecha.setText(task.toStringDateSmall());
+                etHora.setText(task.toStringHourSmall());
 
             }
         }
@@ -132,12 +135,19 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd/MM/yyyy" );
         LocalDate ld = LocalDate.parse( date , formatter );
 
+        //SAVE AND FORMAT HOUR
+        String hour = editTextTime.getText().toString();
+        Log.d("editTextTime",hour);
+        hour=hour+":00.000";
+        DateTimeFormatter formatterTime = DateTimeFormatter.ISO_LOCAL_TIME;
+        LocalTime ldt = LocalTime.parse( hour , formatterTime );
 
 
 
 
 
-        Task task = new Task(title,description,1,ld);
+
+        Task task = new Task(title,description,1,ld,ldt);
         Intent intent = new Intent();
         //definim un nom per als parametres de sortida, que no tenen perque ser els mateixos que d'entrada. "OUT_SONG_PARAMETER"
         intent.putExtra(OUT_TASK_PARAMETER,task);
@@ -189,14 +199,9 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
                 String horaFormateada =  (hourOfDay < 9)? String.valueOf(CERO + hourOfDay) : String.valueOf(hourOfDay);
                 String minutoFormateado = (minute < 9)? String.valueOf(CERO + minute):String.valueOf(minute);
 
-                String AM_PM;
-                if(hourOfDay < 12) {
-                    AM_PM = "a.m.";
-                } else {
-                    AM_PM = "p.m.";
-                }
 
-                etHora.setText(horaFormateada + DOS_PUNTOS + minutoFormateado + " " + AM_PM);
+
+                etHora.setText(horaFormateada + DOS_PUNTOS + minutoFormateado);
             }
 
         }, hora, minuto, false);
