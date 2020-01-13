@@ -13,4 +13,7 @@
     <string name="subject">#Subject</string>
     <string name="hour">Hour</string>
 
+    <string name="nameSubject">Subject</string>
+
+
 </resources>

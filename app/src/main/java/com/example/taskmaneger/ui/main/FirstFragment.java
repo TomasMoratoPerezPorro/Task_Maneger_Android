@@ -66,7 +66,7 @@ public class FirstFragment extends Fragment {
         }
         catch(Exception e){
             //si no es pot obrir el fitxer començem amb una base de dades buida.
-            //rn new BDSongs();
+
             bd = new BDTasks();
         }
 

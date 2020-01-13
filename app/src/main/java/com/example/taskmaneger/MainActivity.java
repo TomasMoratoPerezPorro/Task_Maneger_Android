@@ -7,6 +7,7 @@ import com.example.taskmaneger.ui.main.BDTasks;
 import com.example.taskmaneger.ui.main.FirstFragment;
 import com.example.taskmaneger.ui.main.MyPagerAdapter;
 import com.example.taskmaneger.ui.main.SecondFragment;
+import com.example.taskmaneger.ui.main.Subject;
 import com.example.taskmaneger.ui.main.Task;
 import com.google.android.material.tabs.TabLayout;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private ArrayAdapter<Task> adapter;
+    private ArrayAdapter<Subject> adapterSubject;
     FragmentPagerAdapter adapterViewPager;
 
     @Override
