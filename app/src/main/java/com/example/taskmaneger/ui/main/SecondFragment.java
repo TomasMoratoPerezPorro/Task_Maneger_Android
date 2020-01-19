@@ -24,9 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * A placeholder fragment containing a simple view.
- */
+
 public class SecondFragment extends Fragment {
 
     private FloatingActionButton fabAdd;
@@ -57,7 +55,7 @@ public class SecondFragment extends Fragment {
         listViewSubjects = getView().findViewById(R.id.listViewSubjects);
 
 
-        //bd= BDSubjects.getDummySubjects();
+
 
         try{
             bd = BDSubjects.getFromFile(getActivity().getApplicationContext().openFileInput(FILE_NAME));
@@ -68,7 +66,7 @@ public class SecondFragment extends Fragment {
         }
         catch(Exception e){
             //si no es pot obrir el fitxer començem amb una base de dades buida.
-            //rn new BDSongs();
+
 
             bd = new BDSubjects();
         }
@@ -90,16 +88,17 @@ public class SecondFragment extends Fragment {
         listViewSubjects.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //deleteSong(position);
+
                 //abans del delete hem de cridar a un mètode per demanar la confirmació, desde aquest metode esborrarem.
                 deleteConfirmedSubject(position);
                 return true;
             }
         });
 
-        //fabAdd = listViewButton.findViewById(R.id.floatingActionButtonAdd);
+
 
         fabAdd = getView().findViewById(R.id.floatingActionButtonAddSubject);
+
         //hem de passarli un objecte de una clase que implementi un listener (clase anonima)
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,14 +118,14 @@ public class SecondFragment extends Fragment {
             //ara comprovarem si han arribat dades
             //primer de tot com rebrem un objecte song definim la variable
             //hem de saber quin tipus de dades rebrem en aquest cas un objecte de tipus serialitzable
-            //en aquest cas rebrem el objecte OUT_SONG_PRAMETER definit a EditSongActivity, com sabem que es una song farem un CASTING (Song)
+            //en aquest cas rebrem el objecte OUT_SUBJECT_PRAMETER definit a EditSubjectActivity, com sabem que es una Subject farem un CASTING (Subject)
             Subject subject = (Subject) data.getSerializableExtra(EditSubjectActivity.OUT_SUBJECT_PARAMETER);
             if(subject!=null){
                 Log.d("SubjectActivityResult","NOT NULL");
-                //ara falta comprobar quin es el objectiu de aquest result, li estavem demanant editar una canço o estavem afegint una nova?
+                //ara falta comprobar quin es el objectiu de aquest result, li estavem demanant editar una subject o estavem afegint una nova?
                 if(requestCode==REQUEST_CODE_NEW_SUBJECT){
                     Log.d("SubjectActivityResult","NEW SONG");
-                    //creem un metode per afegir una canço, farem sobrecarrega sobre addSong per aprofitar el noim del metode
+                    //creem un metode per afegir una subject, farem sobrecarrega sobre addSubject per aprofitar el nom del metode
                     //pero podriem crear un metode nou.
                     addSubject(subject);
                 }
@@ -150,7 +149,7 @@ public class SecondFragment extends Fragment {
         //Per passar dades a l'altre activitat la hem de posar a intent
         //Per passar un objecte ho hem de guardar a la memoria, nomes es poden guardar a la memoria serializables
         //per a que un objecte sigui serializable la seva classe té que implementar una interfícies serializable.
-        //la clase de desti (editSong es la que defineix com es diran els parametres que li podem passar.
+        //la clase de desti (editSubject es la que defineix com es diran els parametres que li podem passar.
         intent.putExtra(EditSubjectActivity.SUBJECT_PARAMETER,bd.getSubjects().get(position));
 
         //ara encenem un nova activitat amb un metode de la classe activity (AFEGIM EL CODI per rebre el resultat final)
@@ -158,10 +157,10 @@ public class SecondFragment extends Fragment {
     }
 
     private void modifySubject(Subject subject) {
-        //per a poder modificar la canço necessitem saber quina canço es la que s'ha editat.
-        //per aixo abans de passar a l'altre activity ens hem de guardar la posició desde editSong
+        //per a poder modificar la canço necessitem saber quina Assignatura es la que s'ha editat.
+        //per aixo abans de passar a l'altre activity ens hem de guardar la posició desde editSubject
         // //hem de declarar un atribut privat i guardar alla la posicio.
-        //creem el atribut editingSong
+        //creem el atribut editingSubject
 
         //abans de utilitzar-lo ens asegurem de que la posicio existeix
         if(editingSubject!=-1){
@@ -211,14 +210,14 @@ public class SecondFragment extends Fragment {
         Intent intent = new Intent(getActivity().getApplicationContext(),EditSubjectActivity.class);
         //ara encenem un nova activitat amb un metode de la classe activity
         //fem servir el ForResult perque esperm un resultat
-        //per fer ho necessitem un codi per diferenciar el addSong del editSong-> definirem dos atributs de classe que son enters (REQUEST_CODE_NEW_SONG i REQUEST_CODE_EDIT_SONG)
+        //per fer ho necessitem un codi per diferenciar el addSubject del editSubject-> definirem dos atributs de classe que son enters (REQUEST_CODE_NEW_SUBJECT i REQUEST_CODE_EDIT_SUBJECT)
         startActivityForResult(intent,REQUEST_CODE_NEW_SUBJECT);
         saveToFile();
     }
 
     private void addSubject(Subject subject) {
         bd.getSubjects().add(subject);
-        //igual que fem amb delete song ara hem de comunicar que les dades han canviat.
+        //igual que fem amb delete subject ara hem de comunicar que les dades han canviat.
         adapterSubject.notifyDataSetChanged();
         //ara volem que es fagi un scroll automatic on s'insereix el item.
         listViewSubjects.smoothScrollToPosition(bd.getSubjects().size()-1);

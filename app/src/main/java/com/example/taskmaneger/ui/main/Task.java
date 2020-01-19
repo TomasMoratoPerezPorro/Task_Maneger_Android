@@ -19,7 +19,7 @@ public class Task implements Serializable {
         this.title=title;
         this.description=description;
         this.subject=subject;
-        //this.deadline=deadline;
+
         this.date=date;
         this.hour=hour;
 
@@ -38,9 +38,7 @@ public class Task implements Serializable {
         return subject;
     }
 
-   // public long getDeadline() {
-        //return deadline;
-   // }
+
 
     public LocalDate getDate(){
         return date;

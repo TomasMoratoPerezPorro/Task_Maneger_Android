@@ -22,9 +22,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    //carrego les dades (dummy)
-    //private BDTasks bd;
-
 
     private ArrayAdapter<Task> adapter;
     private ArrayAdapter<Subject> adapterSubject;
@@ -32,12 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        /*tab_titles = new ArrayList<String>();
-        for(int i=1; i<3;i++){
-            tab_titles.add("Tab "+i);
-        }*/
 
-        //bd= BDTasks.getDummyTasks();
 
         super.onCreate(savedInstanceState);
 

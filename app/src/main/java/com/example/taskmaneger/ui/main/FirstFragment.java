@@ -58,7 +58,7 @@ public class FirstFragment extends Fragment {
         listViewTasks = getView().findViewById(R.id.listViewTasks);
 
 
-        //bd= BDTasks.getDummyTasks();
+
 
         try{
             bd = BDTasks.getFromFile(getActivity().getApplicationContext().openFileInput(FILE_NAME));
@@ -87,16 +87,14 @@ public class FirstFragment extends Fragment {
         listViewTasks.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //deleteSong(position);
+
                 //abans del delete hem de cridar a un mètode per demanar la confirmació, desde aquest metode esborrarem.
                 deleteConfirmedTask(position);
                 return true;
             }
         });
 
-        //fabAdd = listViewButton.findViewById(R.id.floatingActionButtonAdd);
 
-        //fabAdd = getView().findViewById(R.id.floatingActionButtonAdd);
         //hem de passarli un objecte de una clase que implementi un listener (clase anonima)
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,14 +108,14 @@ public class FirstFragment extends Fragment {
     private void editTask(int position) {
         Log.d("editSong",bd.getTasks().get(position).toString());
 
-        editingTask = position; //aqui guardem la posició per poderla utilitzar a la funcio editSong
+        editingTask = position; //aqui guardem la posició per poderla utilitzar a la funcio editTask
 
         //Creem el intent passant-li el context i la classe de la qual sera la activitat
         Intent intent = new Intent(getActivity().getApplicationContext(),EditTaskActivity.class);
         //Per passar dades a l'altre activitat la hem de posar a intent
         //Per passar un objecte ho hem de guardar a la memoria, nomes es poden guardar a la memoria serializables
         //per a que un objecte sigui serializable la seva classe té que implementar una interfícies serializable.
-        //la clase de desti (editSong es la que defineix com es diran els parametres que li podem passar.
+        //la clase de desti (editTask es la que defineix com es diran els parametres que li podem passar.
         intent.putExtra(EditTaskActivity.TASK_PARAMETER,bd.getTasks().get(position));
 
         //ara encenem un nova activitat amb un metode de la classe activity (AFEGIM EL CODI per rebre el resultat final)

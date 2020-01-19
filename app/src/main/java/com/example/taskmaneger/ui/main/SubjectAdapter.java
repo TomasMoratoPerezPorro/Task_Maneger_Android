@@ -18,7 +18,7 @@ public class SubjectAdapter extends ArrayAdapter<Subject> {
         TextView textViewName = view.findViewById(idResourceName);
 
 
-        //position corresponent a la vista que estem creant per a cada canço
+        //position corresponent a la vista que estem creant per a cada assignatura
 
         Subject subject = this.getItem(position);
 

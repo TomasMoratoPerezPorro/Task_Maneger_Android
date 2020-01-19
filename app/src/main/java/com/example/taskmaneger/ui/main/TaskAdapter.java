@@ -20,7 +20,7 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         TextView textViewDate = view.findViewById(idResourceDate);
         TextView textViewHour = view.findViewById(idResourceHour);
 
-        //position corresponent a la vista que estem creant per a cada canço
+        //position corresponent a la vista que estem creant per a cada tasca
 
         Task task = this.getItem(position);
 
